@@ -20,7 +20,7 @@ function parse_and_normalize_geojson_string(raw_string){
 jQuery(document).ready(function(){
 
     if ( !$('#search-page,#reverse-page').length ){ return; }
-    
+
     var is_reverse_search = !!( $('#reverse-page').length );
 
     $('#q').focus();
@@ -46,6 +46,11 @@ jQuery(document).ready(function(){
         // We don't need a marker, but an L.circle instance changes radius once you zoom in/out
         var cm = L.circleMarker([nominatim_map_init.lat,nominatim_map_init.lon], { radius: 5, weight: 2, fillColor: '#ff7800', color: 'red', opacity: 0.75, clickable: false});
         cm.addTo(map);
+
+
+        L.marker([nominatim_map_init.lat, nominatim_map_init.lon]).addTo(map)
+          .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+          .openPopup();
     }
 
     var MapPositionControl = L.Control.extend({
@@ -81,8 +86,8 @@ jQuery(document).ready(function(){
         html_mouse = "mouse position " + (mouse_lat_lng ? [mouse_lat_lng.lat.toFixed(5), mouse_lat_lng.lng.toFixed(5)].join(',') : '-');
         html_click = "last click: " + (last_click_latlng ? [last_click_latlng.lat.toFixed(5),last_click_latlng.lng.toFixed(5)].join(',') : '-');
 
-        html_center = 
-            "map center: " + 
+        html_center =
+            "map center: " +
             map.getCenter().lat.toFixed(5) + ',' + map.getCenter().lng.toFixed(5) +
             " <a target='_blank' href='" + map_link_to_osm() + "'>view on osm.org</a>";
 
@@ -172,7 +177,7 @@ jQuery(document).ready(function(){
             circle.on('click', function(){
                 highlight_result(position);
             });
-            layerGroup.addLayer(circle);            
+            layerGroup.addLayer(circle);
         }
         if (result.aBoundingBox){
 
@@ -186,7 +191,7 @@ jQuery(document).ready(function(){
                     {
                         // http://leafletjs.com/reference-1.0.3.html#path-option
                         style: function(feature) {
-                            return { interactive: false, color: 'blue' }; 
+                            return { interactive: false, color: 'blue' };
                         }
                     }
                 );
@@ -328,7 +333,7 @@ jQuery(document).ready(function(){
                 {
                     // http://leafletjs.com/reference-1.0.3.html#path-option
                     style: function(feature) {
-                        return { interactive: false, color: 'blue' }; 
+                        return { interactive: false, color: 'blue' };
                     }
                 }
             );
@@ -343,4 +348,3 @@ jQuery(document).ready(function(){
 
 
 });
-
